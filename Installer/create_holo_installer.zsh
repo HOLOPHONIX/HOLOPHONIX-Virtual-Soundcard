@@ -75,9 +75,9 @@ productbuild --sign "FLPYMFKWA9" --distribution distribution.orig.xml --resource
 
 # Notarize
 #xcrun notarytool submit HOLOPHONIX_Virtual_Soundcard_$ch.$version.pkg --team-id Q5C99V536K --progress --wait --keychain-profile "Notarize"
-#xcrun notarytool submit HOLOPHONIX_Virtual_Soundcard.$version.pkg --team-id FLPYMFKWA9 --progress --wait --keychain-profile "AppleDev_Notarize_Amadeus"
+xcrun notarytool submit HOLOPHONIX_Virtual_Soundcard.$version.pkg --team-id FLPYMFKWA9 --progress --wait --keychain-profile "AppleDev_Notarize_Amadeus"
 # Staple
-#xcrun stapler staple HOLOPHONIX_Virtual_Soundcard.$version.pkg
+xcrun stapler staple HOLOPHONIX_Virtual_Soundcard.$version.pkg
 
 # Remove script created files
 rm -r uscripts
