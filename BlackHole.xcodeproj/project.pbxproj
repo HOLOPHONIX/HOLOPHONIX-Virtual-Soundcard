@@ -15,8 +15,8 @@
 		3D8966422849C318002AB3F0 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7477EC157823CF00412279 /* CoreAudio.framework */; };
 		3D8966432849C318002AB3F0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7477AC1578168D00412279 /* CoreFoundation.framework */; };
 		3D8966462849C318002AB3F0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 03FDCADB233FAE0500101681 /* LICENSE */; };
-		3D8966472849C318002AB3F0 /* BlackHole.icns in Resources */ = {isa = PBXBuildFile; fileRef = 03FDCAD9233F235500101681 /* BlackHole.icns */; };
 		3D8966482849C318002AB3F0 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 039FF2572341B6E800400D7A /* CHANGELOG.md */; };
+		5005FB022926838800152DCF /* HOLOPHONIX Virtual Soundcard.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5005FB012926838800152DCF /* HOLOPHONIX Virtual Soundcard.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,7 +33,6 @@
 
 /* Begin PBXFileReference section */
 		039FF2572341B6E800400D7A /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		03FDCAD9233F235500101681 /* BlackHole.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = BlackHole.icns; sourceTree = "<group>"; };
 		03FDCADB233FAE0500101681 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2D616EF215B8C82500D598BD /* BlackHole.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BlackHole.c; sourceTree = "<group>"; };
 		2D7477AC1578168D00412279 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -53,6 +52,8 @@
 		3D89664D2849C318002AB3F0 /* BlackHole.driver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackHole.driver; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D8966882849D45F002AB3F0 /* postinstall */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = postinstall; sourceTree = "<group>"; };
 		3D8966892849D45F002AB3F0 /* preinstall */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = preinstall; sourceTree = "<group>"; };
+		5005FB012926838800152DCF /* HOLOPHONIX Virtual Soundcard.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "HOLOPHONIX Virtual Soundcard.icns"; sourceTree = "<group>"; };
+		5005FB032926839E00152DCF /* create_holo_installer.zsh */ = {isa = PBXFileReference; lastKnownFileType = text; path = create_holo_installer.zsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +80,8 @@
 		2D616EF015B8C82500D598BD /* BlackHole */ = {
 			isa = PBXGroup;
 			children = (
+				5005FB012926838800152DCF /* HOLOPHONIX Virtual Soundcard.icns */,
 				3D08380E284A7DE100C69403 /* BlackHole.plist */,
-				03FDCAD9233F235500101681 /* BlackHole.icns */,
 				2D616EF215B8C82500D598BD /* BlackHole.c */,
 			);
 			path = BlackHole;
@@ -125,6 +126,7 @@
 		3D083805284A7BB000C69403 /* Installer */ = {
 			isa = PBXGroup;
 			children = (
+				5005FB032926839E00152DCF /* create_holo_installer.zsh */,
 				3D08381B284AA8EE00C69403 /* create_installer.sh */,
 				3D8966872849D45F002AB3F0 /* scripts */,
 				3D083806284A7BB000C69403 /* conclusion.html */,
@@ -198,11 +200,11 @@
 				TargetAttributes = {
 					3D88D48B285BBA5800629399 = {
 						CreatedOnToolsVersion = 13.4;
-						DevelopmentTeam = Q5C99V536K;
+						DevelopmentTeam = FLPYMFKWA9;
 						ProvisioningStyle = Automatic;
 					};
 					3D89663D2849C318002AB3F0 = {
-						DevelopmentTeam = Q5C99V536K;
+						DevelopmentTeam = FLPYMFKWA9;
 					};
 				};
 			};
@@ -230,8 +232,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5005FB022926838800152DCF /* HOLOPHONIX Virtual Soundcard.icns in Resources */,
 				3D8966462849C318002AB3F0 /* LICENSE in Resources */,
-				3D8966472849C318002AB3F0 /* BlackHole.icns in Resources */,
 				3D8966482849C318002AB3F0 /* CHANGELOG.md in Resources */,
 				3D083818284A7F1200C69403 /* VERSION in Resources */,
 				3D083819284A7F1500C69403 /* README.md in Resources */,
@@ -288,6 +290,7 @@
 				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -340,6 +343,7 @@
 				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -394,6 +398,7 @@
 				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -436,7 +441,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = Q5C99V536K;
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -466,7 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q5C99V536K;
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -500,7 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q5C99V536K;
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -522,7 +527,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				DEVELOPMENT_TEAM = Q5C99V536K;
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"DEBUG=0",
@@ -542,7 +547,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				DEVELOPMENT_TEAM = Q5C99V536K;
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"DEBUG=1",
@@ -562,7 +567,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				DEVELOPMENT_TEAM = Q5C99V536K;
+				DEVELOPMENT_TEAM = FLPYMFKWA9;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"DEBUG=1",

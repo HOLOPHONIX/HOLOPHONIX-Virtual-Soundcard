@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="1">
+    <title>HOLOPHONIX Virtual Soundcard</title>
+    <license file='../LICENSE'/>
+    <domains enable_anywhere='false' enable_currentUserHome='false' enable_localSystem='true'/>
+    <pkg-ref id="com.amadeus.holophonix.vs16ch"/>
+    <pkg-ref id="com.amadeus.holophonix.vs64ch"/>
+    <pkg-ref id="com.amadeus.holophonix.vs128ch"/>
+    <pkg-ref id="com.amadeus.holophonix.uvs16ch"/>
+    <pkg-ref id="com.amadeus.holophonix.uvs64ch"/>
+    <pkg-ref id="com.amadeus.holophonix.uvs128ch"/>
+    <options customize="allow" require-scripts="false" rootVolumeOnly='true' hostArchitectures='x86_64,arm64'/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min='10.9'/>
+        </allowed-os-versions>
+    </volume-check>
+    <choices-outline>
+        <line choice='install'>
+            <line choice="com.amadeus.holophonix.vs16ch"/>
+            <line choice="com.amadeus.holophonix.vs64ch"/>
+            <line choice="com.amadeus.holophonix.vs128ch"/>
+        </line>
+        <line choice='uninstall'>
+            <line choice="com.amadeus.holophonix.uvs16ch"/>
+            <line choice="com.amadeus.holophonix.uvs64ch"/>
+            <line choice="com.amadeus.holophonix.uvs128ch"/>
+        </line>
+    </choices-outline>
+    <choice title="HOLOPHONIX Virtual Soundcard" id="install" enabled="exclusion(1)"/>
+        <choice id="com.amadeus.holophonix.vs16ch" visible="true" title="16 channels driver" start_selected="false" enabled="exclusion(16)">
+            <pkg-ref id="com.amadeus.holophonix.vs16ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.vs16ch" version="0" onConclusion="none" >HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
+        <choice id="com.amadeus.holophonix.vs64ch" visible="true" title="64 channels driver" start_selected="false" enabled="exclusion(64)">
+            <pkg-ref id="com.amadeus.holophonix.vs64ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.vs64ch" version="0" onConclusion="none">HOLOPHONIX_Virtual_Soundcard-64ch.pkg</pkg-ref>
+        <choice id="com.amadeus.holophonix.vs128ch" visible="true" title="128 channels driver"  enabled="exclusion(128)">
+            <pkg-ref id="com.amadeus.holophonix.vs128ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.vs128ch" version="0" onConclusion="none">HOLOPHONIX_Virtual_Soundcard-128ch.pkg</pkg-ref>
+
+    <choice title="Uninstall HOLOPHONIX Virtual Soundcard" id="uninstall" enabled="exclusion(-1)"/>
+        <choice id="com.amadeus.holophonix.uvs16ch" visible="true" title="16 channels driver" start_selected="false" enabled="exclusion(-16)">
+            <pkg-ref id="com.amadeus.holophonix.uvs16ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.uvs16ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
+        <choice id="com.amadeus.holophonix.uvs64ch" visible="true" title="64 channels driver" start_selected="false" enabled="exclusion(-64)">
+            <pkg-ref id="com.amadeus.holophonix.uvs64ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.uvs64ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-64ch.pkg</pkg-ref>
+        <choice id="com.amadeus.holophonix.uvs128ch" visible="true" title="128 channels driver" start_selected="false" enabled="exclusion(-128)">
+            <pkg-ref id="com.amadeus.holophonix.uvs128ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.uvs128ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-128ch.pkg</pkg-ref>
+
+    <script><![CDATA[
+    function exclusion(number) {
+        if (number < -1) {
+            number -= 2*number
+            return (!choices['com.amadeus.holophonix.vs'+number+'ch'].selected)
+        }
+        else if (number > 1) {
+            return (!choices['com.amadeus.holophonix.uvs'+number+'ch'].selected)
+        }
+        else {
+            return ((choices[(number>0?'un':'')+'install'].selected == 1)?0:1)
+        }
+    }
+    ]]></script>
+
+
+</installer-gui-script>
