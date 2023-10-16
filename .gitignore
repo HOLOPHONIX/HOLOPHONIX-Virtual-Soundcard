@@ -1,5 +1,5 @@
 xcuserdata/
 .DS_Store
 *.pkg
-build/*
 DerivedData/*
+build/*
