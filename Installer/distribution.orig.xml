@@ -4,9 +4,11 @@
     <license file='../LICENSE'/>
     <domains enable_anywhere='false' enable_currentUserHome='false' enable_localSystem='true'/>
     <pkg-ref id="com.amadeus.holophonix.vs16ch"/>
+    <pkg-ref id="com.amadeus.holophonix.vs32ch"/>
     <pkg-ref id="com.amadeus.holophonix.vs64ch"/>
     <pkg-ref id="com.amadeus.holophonix.vs128ch"/>
     <pkg-ref id="com.amadeus.holophonix.uvs16ch"/>
+    <pkg-ref id="com.amadeus.holophonix.uvs32ch"/>
     <pkg-ref id="com.amadeus.holophonix.uvs64ch"/>
     <pkg-ref id="com.amadeus.holophonix.uvs128ch"/>
     <options customize="allow" require-scripts="false" rootVolumeOnly='true' hostArchitectures='x86_64,arm64'/>
@@ -18,11 +20,13 @@
     <choices-outline>
         <line choice='install'>
             <line choice="com.amadeus.holophonix.vs16ch"/>
+            <line choice="com.amadeus.holophonix.vs32ch"/>
             <line choice="com.amadeus.holophonix.vs64ch"/>
             <line choice="com.amadeus.holophonix.vs128ch"/>
         </line>
         <line choice='uninstall'>
             <line choice="com.amadeus.holophonix.uvs16ch"/>
+            <line choice="com.amadeus.holophonix.uvs32ch"/>
             <line choice="com.amadeus.holophonix.uvs64ch"/>
             <line choice="com.amadeus.holophonix.uvs128ch"/>
         </line>
@@ -32,6 +36,10 @@
             <pkg-ref id="com.amadeus.holophonix.vs16ch"/>
         </choice>
         <pkg-ref id="com.amadeus.holophonix.vs16ch" version="0" onConclusion="none" >HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
+        <choice id="com.amadeus.holophonix.vs32ch" visible="true" title="32 channels driver" start_selected="false" enabled="exclusion(32)">
+            <pkg-ref id="com.amadeus.holophonix.vs32ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.vs32ch" version="0" onConclusion="none" >HOLOPHONIX_Virtual_Soundcard-32ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.vs64ch" visible="true" title="64 channels driver" start_selected="false" enabled="exclusion(64)">
             <pkg-ref id="com.amadeus.holophonix.vs64ch"/>
         </choice>
@@ -46,6 +54,10 @@
             <pkg-ref id="com.amadeus.holophonix.uvs16ch"/>
         </choice>
         <pkg-ref id="com.amadeus.holophonix.uvs16ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
+        <choice id="com.amadeus.holophonix.uvs32ch" visible="true" title="32 channels driver" start_selected="false" enabled="exclusion(-32)">
+            <pkg-ref id="com.amadeus.holophonix.uvs32ch"/>
+        </choice>
+        <pkg-ref id="com.amadeus.holophonix.uvs32ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-32ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.uvs64ch" visible="true" title="64 channels driver" start_selected="false" enabled="exclusion(-64)">
             <pkg-ref id="com.amadeus.holophonix.uvs64ch"/>
         </choice>
@@ -69,6 +81,4 @@
         }
     }
     ]]></script>
-
-
 </installer-gui-script>

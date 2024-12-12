@@ -7,7 +7,7 @@
 #   chmod +x create_installer.sh
 
 devTeamID="FLPYMFKWA9" # ⚠️ Replace this with your own developer team ID
-notarize=false # To skip notarization, set this to false
+notarize=true # To skip notarization, set this to false
 notarizeProfile="AppleDev_Notarize_Amadeus" # ⚠️ Replace this with your own notarytool keychain profile name
 
 ############################################################################
@@ -30,14 +30,13 @@ mkdir Installer/uscripts
 version=$(git describe --tags --abbrev=0)_$(git rev-parse --short HEAD)_$(date "+%Y-%m-%d")_x86_64-arm64
 
 # Create individual packages for each number of channels
-for channels in 16 64 128
+for channels in 16 32 64 128
 do
     # Env
     ch=$channels"ch"
     bundleID="com.amadeus.holophonix.vs$ch"
     bundleIDu="com.amadeus.holophonix.uvs$ch"
-    driverName="HOLOPHONIX\ Virtual\ Soundcard"
-    iconFile="HOLOPHONIX\ Virtual\ Soundcard.icns"
+    driverName="HOLOPHONIX Virtual Soundcard"
 
     # Build Xcode Project
     xcodebuild \
@@ -45,7 +44,7 @@ do
     -configuration Release \
     -target BlackHole CONFIGURATION_BUILD_DIR=build \
     PRODUCT_BUNDLE_IDENTIFIER=$bundleID \
-    GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels='$channels' kPlugIn_BundleID=\"'$bundleID'\" kDriver_Name=\"'$driverName'\" kPlugIn_Icon=\"'$iconFile'\"'
+    GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels='$channels' kPlugIn_BundleID=\"'$bundleID'\" kDriver_Name=\"HOLOPHONIX\ Virtual\ Soundcard\" kPlugIn_Icon=\"HOLOPHONIX\ Virtual\ Soundcard.icns\"'
 
     # Generate a new UUID
     uuid=$(uuidgen)
@@ -107,12 +106,12 @@ fi
 # Remove script created files
 rm -r uscripts
 rm LICENSE
-rm HOLOPHONIX_Virtual_Soundcard-*
-rm uninstall_HOLOPHONIX_Virtual_Soundcard-*
+#rm HOLOPHONIX_Virtual_Soundcard-*
+#rm uninstall_HOLOPHONIX_Virtual_Soundcard-*
 # OR move to folders
-#mkdir ./packages
-#mv HOLOPHONIX_Virtual_Soundcard-* ./packages
-#v uninstall_HOLOPHONIX_Virtual_Soundcard-* ./packages
+mkdir ./packages
+mv HOLOPHONIX_Virtual_Soundcard-* ./packages
+mv uninstall_HOLOPHONIX_Virtual_Soundcard-* ./packages
 
 cd ..
 
