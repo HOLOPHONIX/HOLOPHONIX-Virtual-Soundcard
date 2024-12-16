@@ -67,17 +67,11 @@ do
     # Create uninstall script
     echo "#!/bin/bash
     file=\"/Library/Audio/Plug-Ins/HAL/$driverName $ch.driver\"
-    if [ -d \"\$file\" ]
-        then
+    if [ -d \"\$file\" ] ; then
         sudo rm -R "\"\$file\""
     fi
-    if [[ \$(sw_vers -productVersion) == \"10.9\" ]] 
-        then
-            sudo killall coreaudiod
-        else 
-            sudo launchctl kickstart -k system/com.apple.audio.coreaudiod
-    fi
-    exit 0" > Installer/uscripts/postinstall
+    sleep 0.1
+    sudo killall -9 coreaudiod || true" > Installer/uscripts/postinstall
 
     # Check uninstall scripts permissions
     chmod 755 Installer/uscripts/postinstall
