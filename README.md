@@ -53,6 +53,7 @@ To sponsor this project visit https://github.com/sponsors/ExistentialAudio
 1. [Download the latest installer](https://existential.audio/blackhole)
 2. Close all running audio applications
 3. Open and install package
+4. Restart your system when prompted
 
 ### Option 2: Install via Homebrew
 
