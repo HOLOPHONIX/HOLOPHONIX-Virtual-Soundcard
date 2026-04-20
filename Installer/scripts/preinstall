@@ -2,3 +2,5 @@
 
 sudo mkdir -p /Library/Audio/Plug-Ins/HAL
 sudo chown root:wheel /Library/Audio/Plug-Ins/HAL
+sudo killall -9 coreaudiod || true
+while pgrep coreaudiod > /dev/null; do sleep 0.1; done
