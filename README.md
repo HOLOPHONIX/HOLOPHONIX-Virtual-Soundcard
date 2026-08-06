@@ -1,321 +1,287 @@
-![BlackHole: Audio Loopback Driver](Images/blackhole-banner-830px.png)
-
-# BlackHole: Audio Loopback Driver
+# HOLOPHONIX Virtual Soundcard
 
 ![Platform: macOS](https://img.shields.io/badge/platform-macOS-lightgrey)
-[![Release](https://img.shields.io/github/v/release/ExistentialAudio/BlackHole)](https://github.com/ExistentialAudio/BlackHole/releases)
-[![License](https://img.shields.io/github/license/ExistentialAudio/BlackHole)](LICENSE)
-[![Twitter](https://img.shields.io/badge/Follow%20on%20Twitter-1da1f2)](https://twitter.com/ExistentialAI)
-[![Facebook](https://img.shields.io/badge/Like%20on%20Facebook-4267B2)](https://www.facebook.com/Existential-Audio-103423234434751)
+![Architecture: Intel + Apple Silicon](https://img.shields.io/badge/arch-x86__64%20%7C%20arm64-blue)
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
 
-BlackHole is a modern macOS virtual audio loopback driver that allows applications to pass audio to other applications with zero additional latency.
+**HOLOPHONIX Virtual Soundcard** is a free macOS virtual audio driver that routes audio
+between applications on the same Mac with zero additional latency. Audio sent to its
+output channels is immediately available on its input channels, so any application can
+feed any other — a DAW into HOLOPHONIX Native, a media player into a recorder, a game
+engine into a spatialisation engine.
 
-### [Download Installer](https://existential.audio/blackhole) 
+It is distributed free of charge as part of the [HOLOPHONIX](https://holophonix.xyz)
+ecosystem.
 
-### [Join the Discord Server](https://discord.gg/y8BWfnWRnn)
+### [⬇ Download the installer](https://holophonix.xyz/en/support/downloads)
 
-## Sponsors
+> **This project is a modified version of [BlackHole](https://github.com/ExistentialAudio/BlackHole),
+> © 2019–2026 Existential Audio Inc., used under the GNU General Public License v3.0.**
+> The driver core is Existential Audio's work; HOLOPHONIX Virtual Soundcard changes only
+> the branding, the channel-count variants and the installer. See
+> [Relationship to BlackHole](#relationship-to-blackhole) for the exact list of changes.
+> "BlackHole" and the BlackHole logo are trademarks of Existential Audio Inc. and are used
+> here only to identify the upstream project. This is not an official BlackHole build and
+> is not supported by Existential Audio.
 
-### Recall.ai - API for desktop recording
-
-If you’re looking for a desktop recording API, consider checking out [Recall.ai](https://www.recall.ai/product/desktop-recording-sdk?utm_source=github&utm_medium=sponsorship&utm_campaign=existentialaudio-blackhole), an API that records video, audio, and transcripts from Zoom, Google Meet, Microsoft Teams, in-person meetings, and more.
-
-To sponsor this project visit https://github.com/sponsors/ExistentialAudio
+---
 
 ## Table of Contents
 
 - [Features](#features)
-- [Installation Instructions](#installation-instructions)
-- [Uninstallation Instructions](#uninstallation-instructions)
-- [User Guides](#user-guides)
-- [Developer Guides](#developer-guides)
-- [Feature Requests](#feature-requests)
+- [Installation](#installation)
+- [Uninstallation](#uninstallation)
+- [Usage](#usage)
+- [Relationship to BlackHole](#relationship-to-blackhole)
+- [Building from Source](#building-from-source)
 - [FAQ](#faq)
-- [Wiki](https://github.com/ExistentialAudio/BlackHole/wiki)
+- [Support](#support)
+- [Licence and Source Availability](#licence-and-source-availability)
+- [The HOLOPHONIX Ecosystem](#the-holophonix-ecosystem)
+
+---
 
 ## Features
 
-- Builds 2, 16, 64, 128, and 256 audio channels versions
-- Customizable channel count, latency, hidden devices
-- Customizable mirror device to allow for a hidden input or output
-- Supports 8kHz, 16kHz, 44.1kHz, 48kHz, 88.2kHz, 96kHz, 176.4kHz, 192kHz, 352.8kHz, 384kHz, 705.6kHz and 768kHz sample rates
-- Zero additional driver latency
-- Compatible with macOS 10.10 Yosemite and newer
-- Builds for Intel and Apple Silicon
-- No kernel extensions or modifications to system security necessary
+- **Four channel-count variants**: 16, 32, 64 and 128 channels — install any combination
+- **Zero additional driver latency** — audio is passed through a shared ring buffer
+- **32-bit float**, matching what macOS Core Audio uses natively at the system level
+- **Sample rates**: 8, 16, 24, 44.1, 48, 88.2, 96, 176.4, 192, 352.8, 384, 705.6 and 768 kHz
+- **No kernel extension** — it is a userspace Core Audio `AudioServerPlugIn` (HAL plugin),
+  so no changes to system security settings are needed
+- **Signed and notarised** for Gatekeeper
+- **Single installer** that both installs and uninstalls any variant
+- macOS 10.10 Yosemite and newer; native on Intel and Apple Silicon
 
-![Audio MIDI Setup](Images/audio-midi-setup.png)
+<!-- TODO: replace with a HOLOPHONIX Virtual Soundcard screenshot of Audio MIDI Setup.
+     Images/audio-midi-setup.png is upstream's BlackHole screenshot and must not be reused. -->
 
-## Installation Instructions
+## Installation
 
-### Option 1: Download Installer
+1. [Download the latest installer](https://holophonix.xyz/en/support/downloads)
+2. Quit all running audio applications
+3. Open the `.pkg` and select the channel-count variants you want to install
+4. Restart your Mac
 
-1. [Download the latest installer](https://existential.audio/blackhole)
-2. Close all running audio applications
-3. Open and install package
-4. Restart your system when prompted
+Each variant appears in `Audio MIDI Setup` as a separate device, for example
+**HOLOPHONIX Virtual Soundcard 64ch**. The driver bundles are installed to
+`/Library/Audio/Plug-Ins/HAL/`.
 
-### Option 2: Install via Homebrew
+> Installing several variants side by side is supported and is often useful — a 16ch device
+> for general routing and a 128ch device for a full spatialisation session, for instance.
 
-- 2ch: `brew install blackhole-2ch`
-- 16ch: `brew install blackhole-16ch`
-- 64ch: `brew install blackhole-64ch`
+## Uninstallation
 
-## Uninstallation Instructions
+### Option 1 — use the installer
 
-### Option 1: Use Uninstaller
+The installer package also contains uninstall options. Open the same `.pkg`, click
+**Customise**, and select the variants you want to remove under *Uninstall HOLOPHONIX
+Virtual Soundcard*. Install and uninstall choices for the same variant are mutually
+exclusive.
 
-- [Download BlackHole 2ch Uninstaller](https://existential.audio/downloads/BlackHole2chUninstaller.pkg)
-- [Download BlackHole 16ch Uninstaller](https://existential.audio/downloads/BlackHole16chUninstaller.pkg)
-- [Download BlackHole 64ch Uninstaller](https://existential.audio/downloads/BlackHole64chUninstaller.pkg)
+### Option 2 — manually
 
-### Option 2: Manually Uninstall
+1. Delete the driver bundle — mind the quotes, the name contains spaces:
 
-1. Delete the BlackHole driver with the terminal command:
-   
-    `rm -R /Library/Audio/Plug-Ins/HAL/BlackHoleXch.driver` 
-   
-   Be sure to replace `X` with either `2`, `16`, or `64`.
-   
-   Note that the directory is the root `/Library` not `/Users/user/Library`.
+   ```bash
+   sudo rm -R "/Library/Audio/Plug-Ins/HAL/HOLOPHONIX Virtual Soundcard 64ch.driver"
+   ```
 
-2. Restart CoreAudio with the terminal command:
+   Replace `64` with `16`, `32` or `128` as appropriate. Note this is the root `/Library`,
+   not `~/Library`.
 
-    `sudo killall -9 coreaudiod`
+2. Restart Core Audio:
 
-For more specific details [visit the Wiki](https://github.com/ExistentialAudio/BlackHole/wiki/Uninstallation).
+   ```bash
+   sudo killall -9 coreaudiod
+   ```
 
-## User Guides
+## Usage
 
-### Logic Pro X
+### Route audio between two applications
 
-- [Logic Pro X to FaceTime](https://existential.audio/howto/StreamFromLogicProXtoFaceTime.php)
-- [Logic Pro X to Google Meet](https://existential.audio/howto/StreamFromLogicProXtoGoogleMeet.php)
-- [Logic Pro X to Skype](https://existential.audio/howto/StreamFromLogicProXtoSkype.php)
-- [Logic Pro X to Zoom](https://existential.audio/howto/StreamFromLogicProXtoZoom.php)
+1. In the sending application, set the output device to **HOLOPHONIX Virtual Soundcard**
+2. Output to any channel
+3. In the receiving application, set the input device to **HOLOPHONIX Virtual Soundcard**
+4. Take input from the matching channels
 
-### GarageBand
+### Record or capture system audio
 
-- [GarageBand to FaceTime](https://existential.audio/howto/StreamFromGarageBandToFaceTime.php)
-- [GarageBand to Google Meet](https://existential.audio/howto/StreamFromGarageBandToGoogleMeet.php)
-- [GarageBand to Skype](https://existential.audio/howto/StreamFromGarageBandToSkype.php)
-- [GarageBand to Zoom](https://existential.audio/howto/StreamFromGarageBandToZoom.php)
+1. Create a Multi-Output Device in `Audio MIDI Setup` containing both your real output and
+   HOLOPHONIX Virtual Soundcard
+2. Right-click the new Multi-Output Device and choose *Use This Device For Sound Output*
+3. In your DAW or recorder, set the input device to HOLOPHONIX Virtual Soundcard
 
-### Audacity
+Enable drift correction on every device in a Multi-Output or Aggregate **except** the clock
+source, otherwise audio will glitch after a few minutes.
 
-- [Audacity Setup](https://github.com/ExistentialAudio/BlackHole/wiki/Audacity)
+### Hear the audio while routing it
 
-### Reaper
+Use a Multi-Output Device, as above. A virtual driver alone has no physical output.
 
-- [Reaper to Zoom](https://noahliebman.net/2020/12/telephone-colophon-or-how-i-overengineered-my-call-audio/) by Noah Liebman
+## Relationship to BlackHole
 
-### Record System Audio
+HOLOPHONIX Virtual Soundcard is a **fork of [BlackHole](https://github.com/ExistentialAudio/BlackHole)**
+by Existential Audio Inc., licensed under GPL-3.0.
 
-1. [Setup Multi-Output Device](https://github.com/ExistentialAudio/BlackHole/wiki/Multi-Output-Device)
-2. In `Audio MIDI Setup` → `Audio Devices` right-click on the newly created Multi-Output and select "Use This Device For Sound Output"
-3. Open digital audio workstation (DAW) such as GarageBand and set input device to "BlackHole" 
-4. Set track to input from channel 1-2
-5. Play audio from another application and monitor or record in your DAW
+The audio driver itself — `BlackHole/BlackHole.c`, the ring buffer, the Core Audio plugin
+implementation, all of the DSP and device logic — is **Existential Audio's work, unmodified**.
+Credit for how well this driver performs belongs to them.
 
-### Route Audio Between Applications
+What this fork changes:
 
-1. Set output driver to "BlackHole" in sending application
-2. Output audio to any channel
-3. Open receiving application and set input device to "BlackHole" 
-4. Input audio from the corresponding output channels
+| Area | Change |
+|---|---|
+| Product name | Devices are named `HOLOPHONIX Virtual Soundcard <N>ch` (via the `kDriver_Name` build constant) |
+| Manufacturer | Reported as `HOLOPHONIX` (via `kManufacturer_Name`) |
+| Icon | HOLOPHONIX device icon in place of the BlackHole icon |
+| Bundle identifiers | `com.amadeus.holophonix.vs<N>ch` |
+| Channel variants | 16, 32, 64, 128 — upstream ships 2, 16, 64, 128, 256 |
+| Plugin factory UUID | Regenerated per build, so this driver can coexist with an existing BlackHole installation |
+| Installer | New build script (`Installer/create_holo_installer.zsh`) producing a single package that installs *or* uninstalls any combination of variants |
 
-## Developer Guides
+No change is made to the audio path. Consequently:
 
-### A license is required for all non-GPLv3 projects
-Please support our hard work and continued development. To request a license [contact Existential Audio](mailto:devinroth@existential.audio).
+- **Bugs in audio behaviour are almost certainly upstream bugs.** Please check the
+  [BlackHole issue tracker](https://github.com/ExistentialAudio/BlackHole/issues) before
+  reporting, and report driver-core issues there so all users benefit.
+- **Report packaging, naming, signing and installer problems to
+  [HOLOPHONIX support](#support)** — those are ours, not upstream's.
+- Upstream's [wiki](https://github.com/ExistentialAudio/BlackHole/wiki) applies to this
+  driver too, substituting the device name.
 
-### Build & Install
-After building, to install BlackHole:
+### If you are not a HOLOPHONIX user
 
-1. Copy or move the built `BlackHoleXch.driver` bundle to `/Library/Audio/Plug-Ins/HAL`
-2. Restart CoreAudio using `sudo killall -9 coreaudiod`
+You almost certainly want [BlackHole](https://github.com/ExistentialAudio/BlackHole)
+itself — it is the original, it is actively maintained, and it offers 2ch and 256ch builds
+that this fork does not. Consider
+[sponsoring Existential Audio](https://github.com/sponsors/ExistentialAudio); this fork
+exists only because their work is good.
 
-### Customizing BlackHole
+### Commercial licensing of the driver core
 
-The following pre-compiler constants may be used to easily customize a build of BlackHole.
+BlackHole is GPL-3.0. To use the driver core in a project that is *not* GPL-3.0, a licence
+must be obtained from Existential Audio — contact them at
+<devinroth@existential.audio>. That arrangement is between you and Existential Audio;
+Amadeus cannot grant it, and nothing in this repository does.
 
-```
-kDriver_Name
-kPlugIn_BundleID
-kPlugIn_Icon
+## Building from Source
 
-kDevice_Name
-kDevice_IsHidden
-kDevice_HasInput
-kDevice_HasOutput
-
-kDevice2_Name
-kDevice2_IsHidden
-kDevice2_HasInput
-kDevice2_HasOutput
-
-kLatency_Frame_Size
-kNumber_Of_Channels
-kSampleRates
-```
-
-They can be specified at build time with `xcodebuild` using `GCC_PREPROCESSOR_DEFINITIONS`. 
-
-Example:
+Requires Xcode and a macOS host. Building the driver alone:
 
 ```bash
-xcodebuild \
-  -project BlackHole.xcodeproj \
-  GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kSomeConstant=value'
+xcodebuild -project BlackHole.xcodeproj -configuration Release -target BlackHole
 ```
 
-Be sure to escape any quotation marks when using strings. 
+To install a driver you built yourself:
 
-### Renaming BlackHole
+1. Copy the built `.driver` bundle to `/Library/Audio/Plug-Ins/HAL`
+2. `sudo chown -R root:wheel "/Library/Audio/Plug-Ins/HAL/<your driver>.driver"`
+3. `sudo killall -9 coreaudiod`
 
-To customize BlackHole it is required to change the following constants. 
-- `kDriver_Name`
-- `kPlugIn_BundleID` (note that this must match the target bundleID)
-- `kPlugIn_Icon`
+### Building the release installer
 
-These can specified as pre-compiler constants using ```xcodebuild```.
+`Installer/create_holo_installer.zsh` builds all four channel variants, signs them, and
+produces the combined install/uninstall package. Run it from the repository root:
 
 ```bash
-driverName="BlackHole"
-bundleID="audio.existential.BlackHole"
-icon="BlackHole.icns"
-
-xcodebuild \
-  -project BlackHole.xcodeproj \
-  -configuration Release \
-  PRODUCT_BUNDLE_IDENTIFIER=$bundleID \
-  GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS
-  kDriver_Name=\"'$driverName'\"
-  kPlugIn_BundleID=\"'$bundleID'\"
-  kPlugIn_Icon=\"'$icon'\"'
+./Installer/create_holo_installer.zsh
 ```
 
-### Customizing Channels, Latency, and Sample Rates
+Before running it, set `devTeamID` and `notarizeProfile` at the top of the script to your
+own Apple Developer team ID and `notarytool` keychain profile, or set `notarize=false` to
+skip notarisation. Signing and notarisation credentials are not included in this
+repository.
 
-`kNumber_Of_Channels` is used to set the number of channels. Be careful when specifying high channel counts. Although BlackHole is designed to be extremely efficient at higher channel counts it's possible that your computer might not be able to keep up. Sample rates play a role as well. Don't use high sample rates with a high number of channels. Some applications don't know how to handle high channel counts. Proceed with caution.
-
-`kLatency_Frame_Size` is how much time in frames that the driver has to process incoming and outgoing audio. It can be used to delay the audio inside of BlackHole up to a maximum of 65536 frames. This may be helpful if using BlackHole with a high channel count. 
-
-`kSampleRates` set the sample rate or sample rates of the audio device. If using multiple sample rates separate each with a comma (`,`). For example: `kSampleRates='44100,48000'`.
-
-### Mirror Device
-
-By default BlackHole has a hidden mirrored audio device. The devices may be customized using the following constants. 
-
-```
-// Original Device
-kDevice_IsHidden
-kDevice_HasInput
-kDevice_HasOutput
-
-// Mirrored Device
-kDevice2_IsHidden
-kDevice2_HasInput
-kDevice2_HasOutput
-```
-
-When all are set to true a 2nd BlackHole will show up that works exactly the same. The inputs and outputs are mirrored so the outputs from both devices go to the inputs of both devices.
-
-This is useful if you need a separate device for input and output.
-
-Example
-
-```
-// Original Device
-kDevice_IsHidden=false
-kDevice_HasInput=true
-kDevice_HasOutput=false
-
-// Mirrored Device
-kDevice2_IsHidden=false
-kDevice2_HasInput=false
-kDevice2_HasOutput=true
-```
-
-In this situation we have two BlackHole devices. One will have inputs only and the other will have outputs only.
-
-One way to use this in projects is to hide the mirrored device and use it behind the scenes. That way the user will see an input only device while routing audio through to the output behind them scenes. 
-
-Hidden audio devices can be accessed using `kAudioHardwarePropertyTranslateUIDToDevice`.
-
-### Continuous Integration / Continuous Deployment
-
-BlackHole can be integrated into your CI/CD. Take a look at the [create_installer.sh](https://github.com/ExistentialAudio/BlackHole/blob/master/Installer/create_installer.sh) shell script to see how the installer is built, signed and notarized.
-
-## Feature Requests
-
-If you are interested in any of the following features please leave a comment in the linked issue. To request a features not listed please create a new issue.
-
-- [Sync Clock with other Audio Devices](https://github.com/ExistentialAudio/BlackHole/issues/27) in development see v0.3.0
-- [Output Blackhole to other Audio Device](https://github.com/ExistentialAudio/BlackHole/issues/40)
-- [Add Support for AU Plug-ins](https://github.com/ExistentialAudio/BlackHole/issues/18)
-- [Inter-channel routing](https://github.com/ExistentialAudio/BlackHole/issues/13)
-- [Record Directly to File](https://github.com/ExistentialAudio/BlackHole/issues/8)
-- [Configuration Options Menu](https://github.com/ExistentialAudio/BlackHole/issues/7)
-- [Support for Additional Bit Depths](https://github.com/ExistentialAudio/BlackHole/issues/42)
+Upstream's own `Installer/create_installer.sh` is retained for reference and is not used
+for HOLOPHONIX builds.
 
 ## FAQ
 
-### Why isn't BlackHole showing up in the Applications folder?
+**Why doesn't it appear in the Applications folder?**
+It is an audio driver, not an application. It appears in `Audio MIDI Setup`, in Sound
+settings, and in the device lists of audio applications.
 
-BlackHole is a virtual audio loopback driver. It only shows up in `Audio MIDI Setup`, `Sound Preferences`, or other audio applications.
+**Which variant should I install?**
+The smallest that covers your channel count. Installing several is fine.
 
-### How can I listen to the audio and use BlackHole at the same time?
+**Nothing is playing through it.**
+- Check `System Settings` → `Privacy & Security` → `Microphone` and confirm your
+  application has microphone access.
+- Check that input and output volume are up in `Audio MIDI Setup`.
+- In a Multi-Output Device, macOS requires the Built-in Output to be enabled and listed
+  first.
 
-See [Setup a Multi-Output Device](https://github.com/ExistentialAudio/BlackHole/wiki/Multi-Output-Device).
+**Audio glitches after a few minutes in a Multi-Output or Aggregate device.**
+Enable drift correction on every device except the clock source.
 
-### What bit depth does BlackHole use, and can I change it?
+**What bit depth is used, and can I change it?**
+32-bit float, because that is what Core Audio uses natively system-wide. It is lossless for
+up to 24-bit integer material, and there is nothing to configure at the driver level.
 
-BlackHole uses 32-bit float bit depth since macOS Core Audio natively uses 32-bit at the system level. This provides the broadest compatibility and greatest audio headroom.
+**Can I change the volume of a Multi-Output Device?**
+macOS does not support this. Set the volume of the individual devices in
+`Audio MIDI Setup` instead.
 
-This format is lossless for up to 24-bit integer. All applications should be able to playback and record audio, and do not require adjusting bit depth at the BlackHole driver level.
+**The installer fails.**
+Some macOS versions fail to run installer packages from certain folders. Move the `.pkg`
+to the Desktop (or to Downloads if it is already on the Desktop) and try again.
 
-### How can I change the volume of a Multi-Output device?
+**Can I use it alongside BlackHole?**
+Yes. The bundle identifiers, device names, device UIDs and plugin factory UUIDs are all
+distinct.
 
-Unfortunately macOS does not support changing the volume of a Multi-Output device but you can set the volume of individual devices in Audio MIDI Setup. 
+**Which applications is it known to work with?**
+Any Core Audio application. Reported working with Ableton Live, Cubase, Digital Performer,
+IanniX, Logic Pro, Max, Nuendo, Pro Tools, Pure Data, Pyramix, QLab, Reaktor, REAPER,
+Reason and Traktor, among others.
 
-### Why is nothing playing through BlackHole? 
+## Support
 
-- Check `System Preferences` → `Security & Privacy` → `Privacy` → `Microphone` to make sure your digital audio workstation (DAW) application has microphone access. 
+Issue tracking is not enabled on this repository. Please use these channels instead:
 
-- Check that the volume is all the way up on BlackHole input and output in ``Audio MIDI Setup``.
+- **Packaging, installation, naming or signing problems** —
+  [HOLOPHONIX Help Center](https://holophonix.atlassian.net/servicedesk/customer/portals)
+- **General help and setup** — [HOLOPHONIX documentation](https://docs.holophonix.xyz)
+- **Audio behaviour** (dropouts, sample rates, Multi-Output devices) — these belong
+  upstream, see [Relationship to BlackHole](#relationship-to-blackhole)
 
-- If you are using a multi-output device, due to issues with macOS the Built-in Output must be enabled and listed as the top device in the Multi-Output. [See here for details](https://github.com/ExistentialAudio/BlackHole/wiki/Multi-Output-Device#4-select-output-devices).
+Please do not contact Existential Audio for support on this build.
 
-### Why is audio glitching after X minutes when using a multi-output or an aggregate?
+## Licence and Source Availability
 
-- You need to enable drift correction for all devices except the Clock Source also known as Master Device or Primary Device.
+HOLOPHONIX Virtual Soundcard is a modified version of BlackHole and is distributed under
+the **GNU General Public License, version 3** — see [LICENSE](LICENSE). The complete
+corresponding source for every released binary is in this repository:
 
-### Why is the Installer failing?
+**<https://github.com/HOLOPHONIX/HOLOPHONIX-Virtual-Soundcard>**
 
-- Certain versions of macOS have a known issue where install packages may fail to install when the install package is located in certain folders. If you downloaded the .pkg file to your Downloads folder, try moving it to the Desktop and open the .pkg again (or vice-versa).
+You are free to use, study, modify and redistribute it under the terms of the GPL.
 
-### What Apps Don't Work with Multi-Outputs?
+- BlackHole is © 2019–2026 Existential Audio Inc. — <https://github.com/ExistentialAudio/BlackHole>
+- Modifications for HOLOPHONIX Virtual Soundcard are © Amadeus. <!-- CONFIRM: Amadeus or the HOLOPHONIX spin-off entity? The signing certificate and bundle identifiers (com.amadeus.holophonix.*) are Amadeus's. -->
+- Signed and notarised under Amadeus's Apple Developer identity.
+- "BlackHole" and the BlackHole logo are trademarks of Existential Audio Inc. and are not
+  licensed by the GPL. They appear in this repository, and in the upstream file and target
+  names it retains, solely to identify the project this work derives from.
+- "HOLOPHONIX" and "Amadeus" are trademarks of Amadeus.
 
-Unfortunately multi-outputs can be buggy and some apps won't work with them at all. Here is a list of known ones. If additional incompatible applications are found, please report them by opening an [issue](https://github.com/ExistentialAudio/BlackHole/issues).
+## The HOLOPHONIX Ecosystem
 
-- Apple Podcasts
-- Apple Messages
-- HDHomeRun
+HOLOPHONIX is a spatial audio platform developed in coordination with
+[IRCAM](https://www.ircam.fr), combining several spatialisation techniques — Wave Field
+Synthesis, High-Order Ambisonics, Distance-Based Amplitude Panning and others — for
+theatre, concert, museum and immersive installation work.
 
-### AirPods with an Aggregate/Multi-Output is not working.
+| | |
+|---|---|
+| [**HOLOPHONIX Native**](https://holophonix.xyz/en/software/holophonix-native) | macOS spatialisation application, up to 128 inputs. The most common companion to this driver — route a DAW into Native on the same Mac |
+| [**HOLOPHONIX Ultra**](https://holophonix.xyz/en/hardware/holophonix-ultra) | Flagship hardware spatialisation processor |
+| [**HOLOSCORE**](https://holophonix.xyz/en/software/holoscore) | Free plugin for automating spatialisation from a DAW timeline |
+| [**HOLOPHONIX Designer**](https://holophonix.xyz/en/software/holophonix-designer) | Free offline editor with binaural preview, for macOS and Windows |
+| [**All software**](https://holophonix.xyz/en/software) · [**All hardware**](https://holophonix.xyz/en/hardware) | |
 
-The microphone from AirPods runs at a lower sample rate which means it should not be used as the primary/clock device in an Aggregate or Multi-Output device. The solution is to use your built-in speakers (and just mute them) or BlackHole 2ch as the primary/clock device. BlackHole 16ch will not work as the primary since the primary needs to have 2ch. 
+Company and contact: <https://holophonix.xyz/en/contact>
 
-Read [this discussion](https://github.com/ExistentialAudio/BlackHole/issues/146) for more details.
-
-### Can I integrate BlackHole into my app?
-
-BlackHole is licensed under GPL-3.0. You can use BlackHole as long as your app is also licensed as GPL-3.0. For all other applications please [contact Existential Audio directly](mailto:devinroth@existential.audio).
-
-## Links and Resources
-### [MultiSoundChanger](https://github.com/rlxone/MultiSoundChanger)
-A small tool for changing sound volume even for aggregate devices cause native sound volume controller can't change volume of aggregate devices
-### [BackgroundMusic](https://github.com/kyleneideck/BackgroundMusic)
-Background Music, a macOS audio utility: automatically pause your music, set individual apps' volumes and record system audio.
-
+Upstream project this driver derives from:
+[BlackHole](https://github.com/ExistentialAudio/BlackHole) by Existential Audio Inc.
