@@ -58,11 +58,11 @@ do
     codesign --force --deep --options runtime --sign $devTeamID "Installer/drivers/$driverName $ch.driver"
 
     # Check install scripts permissions
-    chmod 755 Installer/Scripts/preinstall
-    chmod 755 Installer/Scripts/postinstall
+    chmod 755 Installer/holo-scripts/preinstall
+    chmod 755 Installer/holo-scripts/postinstall
 
     # Create installer package with pkgbuild
-    pkgbuild --sign $devTeamID --identifier $bundleID --component "Installer/drivers/$driverName $ch.driver" --scripts Installer/scripts --install-location /Library/Audio/Plug-Ins/HAL Installer/HOLOPHONIX_Virtual_Soundcard-$ch.pkg
+    pkgbuild --sign $devTeamID --identifier $bundleID --component "Installer/drivers/$driverName $ch.driver" --scripts Installer/holo-scripts --install-location /Library/Audio/Plug-Ins/HAL Installer/HOLOPHONIX_Virtual_Soundcard-$ch.pkg
 
     # Create uninstall script
     echo "#!/bin/bash
