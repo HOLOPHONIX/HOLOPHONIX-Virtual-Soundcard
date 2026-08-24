@@ -45,6 +45,9 @@ do
     -configuration Release \
     -target BlackHole CONFIGURATION_BUILD_DIR=build \
     PRODUCT_BUNDLE_IDENTIFIER=$bundleID \
+    CODE_SIGN_IDENTITY="" \
+    CODE_SIGNING_REQUIRED=NO \
+    CODE_SIGNING_ALLOWED=NO \
     GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels='$channels' kPlugIn_BundleID=\"'$bundleID'\" kDriver_Name=\"HOLOPHONIX\ Virtual\ Soundcard\" kPlugIn_Icon=\"HOLOPHONIX\ Virtual\ Soundcard.icns\" kManufacturer_Name=\"HOLOPHONIX\"'
 
     # Generate a new UUID
