@@ -87,6 +87,15 @@ do
         exit 1
     fi
 
+    # Device UIDs derive from kDriver_Name, so a lost escape in the defines would
+    # silently change them and cost users their saved routing.
+    expectedUID="${driverName}%ich_UID"
+    if ! grep -qx "$expectedUID" <<< "$binStrings"; then
+        echo "Device UID literal missing for $ch: expected '$expectedUID' in the binary."
+        echo "kDriver_Name in GCC_PREPROCESSOR_DEFINITIONS likely lost an escape."
+        exit 1
+    fi
+
     # Stamp this variant's fixed CFPlugIn factory UUID
     uuid=${factoryUUIDs[$channels]:-}
     if [ -z "$uuid" ]; then
