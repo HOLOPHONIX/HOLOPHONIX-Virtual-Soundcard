@@ -12,6 +12,16 @@ devTeamID="FLPYMFKWA9" # ⚠️ Replace this with your own developer team ID
 notarize=true # To skip notarization, set this to false
 notarizeProfile="AppleDev_Notarize_Amadeus" # ⚠️ Replace this with your own notarytool keychain profile name
 
+# CFPlugIn factory UUID per variant — CoreFoundation registers factories globally
+# by UUID, so each must differ from the others and from upstream's e395c745…
+# Fixed, not generated, so the same commit always produces the same bundle.
+typeset -A factoryUUIDs=(
+  16  47bfd44c-1c48-49f3-b06a-2b828447d8e2
+  32  1117ce82-10e1-47ff-9f56-2917d417657f
+  64  b93546b0-7789-4d87-8104-b83470061aed
+  128 302ee2c0-5c23-47cb-9c96-0cabbb8ecad3
+)
+
 ############################################################################
 
 # Basic Validation
@@ -28,6 +38,14 @@ fi
 pkgVersion=$(cat VERSION)
 if [ -z "$pkgVersion" ]; then
     echo "VERSION file is missing or empty; cannot version the packages."
+    exit 1
+fi
+
+# The package filename embeds the commit hash, so a dirty tree would produce an
+# artifact whose stamp does not describe its contents. ALLOW_DIRTY=1 to override.
+if [ -z "${ALLOW_DIRTY:-}" ] && [ -n "$(git status --porcelain)" ]; then
+    echo "Working tree is dirty; the version stamp would not match the source."
+    echo "Commit or stash first, or re-run with ALLOW_DIRTY=1 for a throwaway build."
     exit 1
 fi
 
@@ -59,8 +77,12 @@ do
     MACOSX_DEPLOYMENT_TARGET=10.13 \
     GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels='$channels' kPlugIn_BundleID=\"'$bundleID'\" kDriver_Name=\"HOLOPHONIX\ Virtual\ Soundcard\" kPlugIn_Icon=\"HOLOPHONIX\ Virtual\ Soundcard.icns\" kManufacturer_Name=\"HOLOPHONIX\"'
 
-    # Generate a new UUID
-    uuid=$(uuidgen)
+    # Stamp this variant's fixed CFPlugIn factory UUID
+    uuid=${factoryUUIDs[$channels]:-}
+    if [ -z "$uuid" ]; then
+        echo "No factory UUID defined for ${channels}ch — add one to factoryUUIDs."
+        exit 1
+    fi
     awk '{sub(/e395c745-4eea-4d94-bb92-46224221047c/,"'$uuid'")}1' build/BlackHole.driver/Contents/Info.plist > Temp.plist
     mv Temp.plist build/BlackHole.driver/Contents/Info.plist
 
