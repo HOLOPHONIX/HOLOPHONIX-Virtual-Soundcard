@@ -51,7 +51,8 @@ ecosystem.
   so no changes to system security settings are needed
 - **Signed and notarised** for Gatekeeper
 - **Single installer** that both installs and uninstalls any variant
-- macOS 10.10 Yosemite and newer; native on Intel and Apple Silicon
+- Native on Intel and Apple Silicon: macOS 10.13 High Sierra or newer on Intel,
+  macOS 11 Big Sur or newer on Apple Silicon
 
 <!-- TODO: replace with a HOLOPHONIX Virtual Soundcard screenshot of Audio MIDI Setup.
      Images/audio-midi-setup.png is upstream's BlackHole screenshot and must not be reused. -->
