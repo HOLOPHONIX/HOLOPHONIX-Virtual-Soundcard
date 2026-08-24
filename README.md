@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="Images/HOLOPHONIX%20Virtual%20Soundcard%20v2_White.png">
+  <img src="Images/HOLOPHONIX%20Virtual%20Soundcard%20v2_Black.png" alt="HOLOPHONIX Virtual Soundcard" width="620">
+</picture>
+
 # HOLOPHONIX Virtual Soundcard
 
 ![Platform: macOS](https://img.shields.io/badge/platform-macOS-lightgrey)
