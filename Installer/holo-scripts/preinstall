@@ -1,13 +1,7 @@
 #!/bin/sh
-#
-# HOLOPHONIX Virtual Soundcard preinstall — used by create_holo_installer.zsh.
-#
-# Upstream's equivalent is kept pristine in Installer/scripts/ so that merges from
-# BlackHole never conflict. The trade-off: upstream improvements no longer arrive
-# here automatically. After each upstream merge, diff Installer/scripts/preinstall
-# against this file and port anything relevant by hand.
+# Ours; upstream's is kept pristine in Installer/scripts/ so merges never conflict.
+# After each upstream merge, diff against it and port anything relevant by hand.
 
 sudo mkdir -p /Library/Audio/Plug-Ins/HAL
 sudo chown root:wheel /Library/Audio/Plug-Ins/HAL
 sudo killall -9 coreaudiod || true
-while pgrep coreaudiod > /dev/null; do sleep 0.1; done
