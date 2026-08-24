@@ -35,37 +35,37 @@
         <choice id="com.amadeus.holophonix.vs16ch" visible="true" title="16 channels driver" start_selected="false" enabled="exclusion(16)">
             <pkg-ref id="com.amadeus.holophonix.vs16ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.vs16ch" version="0" onConclusion="none" >HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.vs16ch" version="__VERSION__" onConclusion="none" >HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.vs32ch" visible="true" title="32 channels driver" start_selected="false" enabled="exclusion(32)">
             <pkg-ref id="com.amadeus.holophonix.vs32ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.vs32ch" version="0" onConclusion="none" >HOLOPHONIX_Virtual_Soundcard-32ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.vs32ch" version="__VERSION__" onConclusion="none" >HOLOPHONIX_Virtual_Soundcard-32ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.vs64ch" visible="true" title="64 channels driver" start_selected="false" enabled="exclusion(64)">
             <pkg-ref id="com.amadeus.holophonix.vs64ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.vs64ch" version="0" onConclusion="none">HOLOPHONIX_Virtual_Soundcard-64ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.vs64ch" version="__VERSION__" onConclusion="none">HOLOPHONIX_Virtual_Soundcard-64ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.vs128ch" visible="true" title="128 channels driver"  enabled="exclusion(128)">
             <pkg-ref id="com.amadeus.holophonix.vs128ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.vs128ch" version="0" onConclusion="none">HOLOPHONIX_Virtual_Soundcard-128ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.vs128ch" version="__VERSION__" onConclusion="none">HOLOPHONIX_Virtual_Soundcard-128ch.pkg</pkg-ref>
 
     <choice title="Uninstall HOLOPHONIX Virtual Soundcard" id="uninstall" enabled="exclusion(-1)"/>
         <choice id="com.amadeus.holophonix.uvs16ch" visible="true" title="16 channels driver" start_selected="false" enabled="exclusion(-16)">
             <pkg-ref id="com.amadeus.holophonix.uvs16ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.uvs16ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.uvs16ch" version="__VERSION__" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-16ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.uvs32ch" visible="true" title="32 channels driver" start_selected="false" enabled="exclusion(-32)">
             <pkg-ref id="com.amadeus.holophonix.uvs32ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.uvs32ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-32ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.uvs32ch" version="__VERSION__" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-32ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.uvs64ch" visible="true" title="64 channels driver" start_selected="false" enabled="exclusion(-64)">
             <pkg-ref id="com.amadeus.holophonix.uvs64ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.uvs64ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-64ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.uvs64ch" version="__VERSION__" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-64ch.pkg</pkg-ref>
         <choice id="com.amadeus.holophonix.uvs128ch" visible="true" title="128 channels driver" start_selected="false" enabled="exclusion(-128)">
             <pkg-ref id="com.amadeus.holophonix.uvs128ch"/>
         </choice>
-        <pkg-ref id="com.amadeus.holophonix.uvs128ch" version="0" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-128ch.pkg</pkg-ref>
+        <pkg-ref id="com.amadeus.holophonix.uvs128ch" version="__VERSION__" onConclusion="none">uninstall_HOLOPHONIX_Virtual_Soundcard-128ch.pkg</pkg-ref>
 
     <script><![CDATA[
     function exclusion(number) {

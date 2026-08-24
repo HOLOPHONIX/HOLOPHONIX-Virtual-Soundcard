@@ -23,6 +23,14 @@ if [ ! -d BlackHole.xcodeproj ]; then
     exit 1
 fi
 
+# Package version: a plain number macOS Installer can compare, so it can tell an
+# upgrade from a reinstall. Kept in lockstep with upstream via the VERSION file.
+pkgVersion=$(cat VERSION)
+if [ -z "$pkgVersion" ]; then
+    echo "VERSION file is missing or empty; cannot version the packages."
+    exit 1
+fi
+
 rm -rf Installer/drivers
 rm -rf Installer/packages
 
@@ -67,7 +75,7 @@ do
     chmod 755 Installer/holo-scripts/postinstall
 
     # Create installer package with pkgbuild
-    pkgbuild --sign $devTeamID --identifier $bundleID --component "Installer/drivers/$driverName $ch.driver" --scripts Installer/holo-scripts --install-location /Library/Audio/Plug-Ins/HAL Installer/HOLOPHONIX_Virtual_Soundcard-$ch.pkg
+    pkgbuild --sign $devTeamID --identifier $bundleID --version $pkgVersion --component "Installer/drivers/$driverName $ch.driver" --scripts Installer/holo-scripts --install-location /Library/Audio/Plug-Ins/HAL Installer/HOLOPHONIX_Virtual_Soundcard-$ch.pkg
 
     # Create uninstall script
     echo "#!/bin/bash
@@ -82,7 +90,7 @@ do
     chmod 755 Installer/uscripts/postinstall
 
     # Create uninstaller package with pkgbuild
-    pkgbuild --nopayload --sign $devTeamID --identifier $bundleIDu --scripts Installer/uscripts Installer/uninstall_HOLOPHONIX_Virtual_Soundcard-$ch.pkg
+    pkgbuild --nopayload --sign $devTeamID --identifier $bundleIDu --version $pkgVersion --scripts Installer/uscripts Installer/uninstall_HOLOPHONIX_Virtual_Soundcard-$ch.pkg
 
 done
 
@@ -91,8 +99,11 @@ rm -r Installer/drivers
 cp LICENSE ./Installer/
 cd Installer
 
+# Substitute the package version into the distribution template
+sed "s/__VERSION__/$pkgVersion/g" distribution.orig.xml > distribution.xml
+
 # Build & sign combined package
-productbuild --sign $devTeamID --distribution distribution.orig.xml --resources . HOLOPHONIX_Virtual_Soundcard.$version.pkg
+productbuild --sign $devTeamID --distribution distribution.xml --resources . HOLOPHONIX_Virtual_Soundcard.$version.pkg
 
 
 # Notarize and Staple
@@ -105,6 +116,7 @@ fi
 # Remove script created files
 rm -r uscripts
 rm LICENSE
+rm distribution.xml
 #rm HOLOPHONIX_Virtual_Soundcard-*
 #rm uninstall_HOLOPHONIX_Virtual_Soundcard-*
 # OR move to folders

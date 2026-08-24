@@ -4,3 +4,6 @@ xcuserdata/
 *.zip
 DerivedData/*
 build/*
+
+# Generated from distribution.orig.xml by create_holo_installer.zsh
+Installer/distribution.xml
