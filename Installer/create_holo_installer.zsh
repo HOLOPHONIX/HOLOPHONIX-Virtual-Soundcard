@@ -77,6 +77,16 @@ do
     MACOSX_DEPLOYMENT_TARGET=10.13 \
     GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS kNumber_Of_Channels='$channels' kPlugIn_BundleID=\"'$bundleID'\" kDriver_Name=\"HOLOPHONIX\ Virtual\ Soundcard\" kPlugIn_Icon=\"HOLOPHONIX\ Virtual\ Soundcard.icns\" kManufacturer_Name=\"HOLOPHONIX\"'
 
+    # Both bundle-ID sources must agree: from v0.7.1 the driver looks itself up by
+    # kPlugIn_BundleID, and a mismatch with CFBundleIdentifier crashes coreaudiod.
+    builtID=$(plutil -extract CFBundleIdentifier raw build/BlackHole.driver/Contents/Info.plist)
+    binStrings=$(strings build/BlackHole.driver/Contents/MacOS/BlackHole)
+    if [ "$builtID" != "$bundleID" ] || ! grep -qx "$bundleID" <<< "$binStrings"; then
+        echo "Bundle ID mismatch for $ch: Info.plist has '$builtID', expected '$bundleID'"
+        echo "(and kPlugIn_BundleID must carry the same value)."
+        exit 1
+    fi
+
     # Stamp this variant's fixed CFPlugIn factory UUID
     uuid=${factoryUUIDs[$channels]:-}
     if [ -z "$uuid" ]; then
@@ -90,7 +100,7 @@ do
     mv build/BlackHole.driver "Installer/drivers/$driverName $ch.driver"
 
     # Sign driver
-    codesign --force --deep --options runtime --sign $devTeamID "Installer/drivers/$driverName $ch.driver"
+    codesign --force --options runtime --sign $devTeamID "Installer/drivers/$driverName $ch.driver"
 
     # Check install scripts permissions
     chmod 755 Installer/holo-scripts/preinstall
@@ -118,7 +128,6 @@ done
 
 rm -r Installer/drivers
 
-cp LICENSE ./Installer/
 cd Installer
 
 # Substitute the package version into the distribution template
@@ -137,7 +146,6 @@ fi
 
 # Remove script created files
 rm -r uscripts
-rm LICENSE
 rm distribution.xml
 #rm HOLOPHONIX_Virtual_Soundcard-*
 #rm uninstall_HOLOPHONIX_Virtual_Soundcard-*
