@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+set -euo pipefail
 
 # Creates installer for different channel versions.
 # Run this script from the local BlackHole repo's root directory.
@@ -6,6 +7,7 @@
 # it may need execute permissions first by running this command:
 #   chmod +x create_installer.sh
 
+driverName="HOLOPHONIX Virtual Soundcard"
 devTeamID="FLPYMFKWA9" # ⚠️ Replace this with your own developer team ID
 notarize=true # To skip notarization, set this to false
 notarizeProfile="AppleDev_Notarize_Amadeus" # ⚠️ Replace this with your own notarytool keychain profile name
@@ -21,11 +23,11 @@ if [ ! -d BlackHole.xcodeproj ]; then
     exit 1
 fi
 
-rm -r Installer/drivers
-rm -r Installer/packages
+rm -rf Installer/drivers
+rm -rf Installer/packages
 
-mkdir Installer/drivers
-mkdir Installer/uscripts
+mkdir -p Installer/drivers
+mkdir -p Installer/uscripts
 
 version=$(git describe --tags --abbrev=0)_$(git rev-parse --short HEAD)_$(date "+%Y-%m-%d")_x86_64-arm64
 
@@ -36,7 +38,6 @@ do
     ch=$channels"ch"
     bundleID="com.amadeus.holophonix.vs$ch"
     bundleIDu="com.amadeus.holophonix.uvs$ch"
-    driverName="HOLOPHONIX Virtual Soundcard"
 
     # Build Xcode Project
     xcodebuild \
