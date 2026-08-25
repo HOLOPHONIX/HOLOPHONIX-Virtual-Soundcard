@@ -3,8 +3,6 @@
   <img src="Images/HOLOPHONIX%20Virtual%20Soundcard%20v2_Black.png" alt="HOLOPHONIX Virtual Soundcard" width="620">
 </picture>
 
-# HOLOPHONIX Virtual Soundcard
-
 ![Platform: macOS](https://img.shields.io/badge/platform-macOS-lightgrey)
 ![Architecture: Intel + Apple Silicon](https://img.shields.io/badge/arch-x86__64%20%7C%20arm64-blue)
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
@@ -67,7 +65,8 @@ ecosystem.
 1. [Download the latest installer](https://holophonix.xyz/en/support/downloads)
 2. Quit all running audio applications
 3. Open the `.pkg` and select the channel-count variants you want to install
-4. Restart your Mac
+4. The device appears immediately — no restart needed. If it doesn't show up,
+   log out and back in.
 
 Each variant appears in `Audio MIDI Setup` as a separate device, for example
 **HOLOPHONIX Virtual Soundcard 64ch**. The driver bundles are installed to
@@ -143,7 +142,7 @@ What this fork changes:
 | Icon | HOLOPHONIX device icon in place of the BlackHole icon |
 | Bundle identifiers | `com.amadeus.holophonix.vs<N>ch` |
 | Channel variants | 16, 32, 64, 128 — upstream ships 2, 16, 64, 128, 256 |
-| Plugin factory UUID | Regenerated per build, so this driver can coexist with an existing BlackHole installation |
+| Plugin factory UUID | Fixed per variant and distinct from upstream's, so this driver coexists with an existing BlackHole installation and builds stay reproducible |
 | Installer | New build script (`Installer/create_holo_installer.zsh`) producing a single package that installs *or* uninstalls any combination of variants |
 
 No change is made to the audio path. Consequently:
