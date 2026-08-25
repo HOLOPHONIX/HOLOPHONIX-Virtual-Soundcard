@@ -2,6 +2,11 @@
 # Ours; upstream's is kept pristine in Installer/scripts/ so merges never conflict.
 # After each upstream merge, diff against it and port anything relevant by hand.
 
-sudo chown -R root:wheel /Library/Audio/Plug-Ins/HAL/HOLOPHONIX\ Virtual\ Soundcard*ch.driver
+for driver in /Library/Audio/Plug-Ins/HAL/HOLOPHONIX\ Virtual\ Soundcard*ch.driver; do
+    chown -R root:wheel "$driver"
+    find "$driver" -type d -exec chmod 755 {} \;
+    find "$driver" -type f -exec chmod 644 {} \;
+    find "$driver/Contents/MacOS" -type f -exec chmod 755 {} \;
+done
 sleep 0.1
-sudo killall -9 coreaudiod || true
+killall -9 coreaudiod || true

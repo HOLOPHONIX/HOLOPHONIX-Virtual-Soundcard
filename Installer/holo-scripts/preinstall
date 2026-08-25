@@ -2,6 +2,7 @@
 # Ours; upstream's is kept pristine in Installer/scripts/ so merges never conflict.
 # After each upstream merge, diff against it and port anything relevant by hand.
 
-sudo mkdir -p /Library/Audio/Plug-Ins/HAL
-sudo chown root:wheel /Library/Audio/Plug-Ins/HAL
-sudo killall -9 coreaudiod || true
+mkdir -p /Library/Audio/Plug-Ins/HAL
+chown root:wheel /Library/Audio/Plug-Ins/HAL
+chmod 755 /Library/Audio/Plug-Ins/HAL
+killall -9 coreaudiod || true
