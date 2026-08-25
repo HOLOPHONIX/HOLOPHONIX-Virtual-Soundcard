@@ -5,23 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.1.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-### Feature Requests
-
-- Add support for additional virtual formats. 24-bit, 16-bit.
-- Sync BlackHole audio clock with any audio device.
-- Create multi-output / aggregate device with installer.
-- Keep track of which apps are connected to the driver.
+## [0.7.1] - 2025-07-03
+- Updated preinstall and postinstall scripts
+- Fixed firmware version to match driver version
 
 
-## [Unreleased]
+## [0.7.0] - 2026-06-18
+- Added 24kHz support
+- Clarified license
 
-### Changed
 
 ## [0.6.1] - 2025-02-06
 - Updated installer to force a computer reboot as recommended by Apple.
 - Updated create_installer.sh script.
-
-### Changed 
 
 
 ## [0.6.0] - 2024-03-22

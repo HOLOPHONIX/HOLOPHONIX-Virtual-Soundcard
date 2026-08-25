@@ -217,6 +217,7 @@ struct ObjectInfo {
 #define                             kDevice_HasOutput                   true
 #endif
 
+// TODO: These need to be the opposite of kDevice_HasOutput and kDevice_HasInput
 #ifndef kDevice2_HasInput
 #define                             kDevice2_HasInput                   true
 #endif
@@ -1942,7 +1943,9 @@ static OSStatus	BlackHole_GetBoxPropertyData(AudioServerPlugInDriverRef inDriver
 		case kAudioObjectPropertyFirmwareVersion:
 			//	This is the human readable firmware version of the box.
 			FailWithAction(inDataSize < sizeof(CFStringRef), theAnswer = kAudioHardwareBadPropertySizeError, Done, "BlackHole_GetBoxPropertyData: not enough space for the return value of kAudioObjectPropertyFirmwareVersion for the box");
-			*((CFStringRef*)outData) = CFSTR("0.5.1");
+            CFStringRef version = (CFStringRef)CFBundleGetValueForInfoDictionaryKey(CFBundleGetBundleWithIdentifier(CFSTR(kPlugIn_BundleID)), CFSTR("CFBundleShortVersionString"));
+            CFRetain(version);
+			*((CFStringRef*)outData) = version;
 			*outDataSize = sizeof(CFStringRef);
 			break;
 			
@@ -4586,7 +4589,8 @@ static OSStatus	BlackHole_DoIOOperation(AudioServerPlugInDriverRef inDriver, Aud
             DebugMsg("BlackHole overload error. kAudioServerPlugInIOOperationWriteMix was unable to complete operation before the deadline. Try increasing the buffer frame size.");
             return kAudioHardwareUnspecifiedError;
         }
-        
+        // TODO: Mix into the buffers but we will need to clear the buffers at some point.
+        // Issue with outputting from mirrored device and main device at the same time. Not currently mixing. 
         
         // Copy the buffers.
         memcpy(gRingBuffer + ringBufferFrameLocationStart * kNumber_Of_Channels, ioMainBuffer, firstPartFrameSize * kNumber_Of_Channels * sizeof(Float32));
