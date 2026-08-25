@@ -57,8 +57,7 @@ ecosystem.
 - Native on Intel and Apple Silicon: macOS 10.13 High Sierra or newer on Intel,
   macOS 11 Big Sur or newer on Apple Silicon
 
-<!-- TODO: replace with a HOLOPHONIX Virtual Soundcard screenshot of Audio MIDI Setup.
-     Images/audio-midi-setup.png is upstream's BlackHole screenshot and must not be reused. -->
+![HOLOPHONIX Virtual Soundcard 16ch in Audio MIDI Setup, showing 16 inputs and 16 outputs at 48 kHz, 32-bit float](Images/holophonix-audio-midi-setup.png)
 
 ## Installation
 
